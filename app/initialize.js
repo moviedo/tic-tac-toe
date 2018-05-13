@@ -27,18 +27,17 @@ function setupGrid(game, modal) {
     girdEl.appendChild(newRow(row, GRID_SIZE));
   }
 
-  let lastMove;
   girdEl.onclick = function(evt) {
     const el = evt.target;
     game.markSpace(el);
 
-    if (lastMove === X_MARK) {
+    if (game.lastMove === X_MARK) {
       Button.mark(el, O_MARK);
-      lastMove = O_MARK;
+      game.lastMove = O_MARK;
 
     } else {
       Button.mark(el, X_MARK);
-      lastMove = X_MARK;
+      game.lastMove = X_MARK;
 
     }
 
