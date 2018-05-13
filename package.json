@@ -1,9 +1,9 @@
 {
-  "name": "brunch-app",
-  "description": "Brunch.io application",
+  "name": "tictactoe-app",
+  "description": "Tic tac toe game built in HTML5.",
   "private": true,
   "author": "Moviedo",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "repository": "https://github.com/moviedo/tic-tac-toe",
   "scripts": {
     "start": "brunch watch --server",
