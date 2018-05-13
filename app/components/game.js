@@ -40,6 +40,7 @@ class Game {
     this.markedSpaces.forEach(el => {
       Button.reset(el);
     });
+    this.markedSpaces = [];
   }
 
   markSpace(el) {
@@ -48,9 +49,11 @@ class Game {
   }
 
   hasPalyerWon() {
+    return this.noMovesLeft();
+  }
 
-
-
+  noMovesLeft() {
+    return this.markedSpaces.length === (this.size * this.size);
   }
 }
 
