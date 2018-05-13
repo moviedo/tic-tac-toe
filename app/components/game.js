@@ -9,25 +9,45 @@ function createGird(grid, size) {
   }
 }
 
-function checkForMatchingRow(grid) {
+function hasXinARow(grid, length) {
   let has_x_in_a_row = false;
-  const length = grid.length;
+  length = length || grid.length;
 
   for (let i = 0; i < length; i++) {
     const row = grid[i];
 
-    if (row.length === length && row.every(x => x.innerText === X_MARK)) {
+    if (row && row.length === length && matches(row, X_MARK)) {
       has_x_in_a_row = true;
       break;
     }
 
-    if (row.length === length && row.every(x => x.innerText === O_MARK)) {
+    if (row && row.length === length && matches(row, O_MARK)) {
       has_x_in_a_row = true;
       break;
     }
   }
 
   return has_x_in_a_row;
+}
+
+function matches(row, mark) {
+  let allMatching = true;
+
+  for (let i = 0; i < row.length; i++) {
+    const item = row[i];
+
+    if (!item || item.innerText !== mark) allMatching = false;
+  }
+
+  return allMatching;
+}
+
+function isOnFirstDiagnol(el) {
+  return el.dataset.row === el.dataset.col;
+}
+
+function isOnSecDiagnol(el, size) {
+  return parseInt(el.dataset.row) + parseInt(el.dataset.col) === size - 1;
 }
 
 class Game {
@@ -44,20 +64,30 @@ class Game {
     this.colGrid = [];
     createGird(this.colGrid, this.size);
 
+    this.vertGrid = [[], []];
+
     this.markedSpaces.forEach(el => {
       Button.reset(el);
     });
     this.markedSpaces = [];
+
+    this.lastMove = undefined;
   }
 
   markSpace(el) {
     this.markedSpaces.push(el);
-    this.rowGrid[el.dataset.row][el.dataset.column] = el;
-    this.colGrid[el.dataset.column][el.dataset.row] = el;
+    this.rowGrid[el.dataset.row][el.dataset.col] = el;
+    this.colGrid[el.dataset.col][el.dataset.row] = el;
+
+    if (isOnFirstDiagnol(el))
+      this.vertGrid[0].push(el);
+
+    if (isOnSecDiagnol(el, this.size))
+      this.vertGrid[1].push(el);
   }
 
   hasPalyerWon() {
-    return this.noMovesLeft() || checkForMatchingRow(this.rowGrid) || checkForMatchingRow(this.colGrid);
+    return this.noMovesLeft() || hasXinARow(this.rowGrid) || hasXinARow(this.colGrid) || hasXinARow(this.vertGrid, this.size);
   }
 
   noMovesLeft() {
