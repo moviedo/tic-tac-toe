@@ -1,9 +1,9 @@
 class Button {
 
-  static create(row, column) {
+  static create(row, col) {
     const buttonEl = document.createElement('button');
     buttonEl.dataset.row = row;
-    buttonEl.dataset.column = column;
+    buttonEl.dataset.col = col;
 
     return buttonEl;
   }
