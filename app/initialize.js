@@ -30,7 +30,6 @@ function setupGrid(game, modal) {
 
   let lastMove;
   girdEl.onclick = function(evt) {
-    console.log('clicked');
     const el = evt.target;
     game.markSpace(el);
 
@@ -45,7 +44,6 @@ function setupGrid(game, modal) {
     }
 
     if (game.hasPalyerWon()) {
-      console.log('game ends');
       modal.open();
     }
   }
