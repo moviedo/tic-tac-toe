@@ -1,4 +1,5 @@
 import { newRow } from './components/row';
+import Modal from './components/modal';
 import Button from './components/button';
 import Game from './components/game';
 
@@ -8,7 +9,10 @@ const O_MARK = 'O';
 
 document.addEventListener('DOMContentLoaded', () => {
   const game = new Game(GRID_SIZE);
-  setupGrid(game);
+  const modal = new Modal(document.getElementById('modal-container'));
+
+  setupGrid(game, modal);
+  setupModal(game, modal);
 
   const restartEl = document.getElementById('restart');
   restartEl.onclick = function() {
@@ -17,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function setupGrid(game) {
+function setupGrid(game, modal) {
   const girdEl = document.getElementById('app');
 
   for(let row = 0; row < GRID_SIZE; row++) {
@@ -26,6 +30,7 @@ function setupGrid(game) {
 
   let lastMove;
   girdEl.onclick = function(evt) {
+    console.log('clicked');
     const el = evt.target;
     game.markSpace(el);
 
@@ -38,5 +43,29 @@ function setupGrid(game) {
       lastMove = X_MARK;
 
     }
+
+    if (game.hasPalyerWon()) {
+      console.log('game ends');
+      modal.open();
+    }
   }
+}
+
+function setupModal(game, modal) {
+  const closeButton = document.querySelector('#modal-container .close');
+  closeButton.onclick = function() {
+    modal.close();
+  }
+
+  const noBtn = document.querySelector('#no');
+  noBtn.onclick = function() {
+    modal.close();
+  }
+
+  const yesBtn = document.querySelector('#yes');
+  yesBtn.onclick = function() {
+    modal.close();
+    game.reset();
+  }
+
 }
