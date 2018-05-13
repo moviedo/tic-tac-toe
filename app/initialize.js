@@ -2,10 +2,9 @@ import { newRow } from './components/row';
 import Modal from './components/modal';
 import Button from './components/button';
 import Game from './components/game';
+import { X_MARK, O_MARK } from './components/game';
 
 const GRID_SIZE = 3;
-const X_MARK = 'X';
-const O_MARK = 'O';
 
 document.addEventListener('DOMContentLoaded', () => {
   const game = new Game(GRID_SIZE);
